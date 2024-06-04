@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Example</title>
+    <script>
+        const storageToken = localStorage.getItem('jwtToken');
+      // Retrieve the token from the URL
+      const urlToken = getQueryParameter('token');
+                console.log('Extracted Token:', urlToken); 
+               
+
+         if(storageToken != urltoken){
+            alert('expired token');
+            window.location.href='/auth/loginMenu';
+         }
+      
+      function getQueryParameter(name) {
+                 const urlParams = new URLSearchParams(window.location.search);
+                 return urlParams.get(name);
+             }
+      
+      function logout(){
+         localStorage.removeItem('jwtToken');
+                    
+                   
+         window.location.href = '/auth/loginMenu'; 
+      }
+
+  
+     function test(){
+    	 window.location.href ='/normalUser/test?token='+urlToken;
+     }
+                  
+                 
+    </script>
+</head>
+<body>
+    <button onclick="logout()">Log out</button>
+    <button onclick="test()">testRedirect</button>
+    afterLoginPage
+</body>
+</html>
