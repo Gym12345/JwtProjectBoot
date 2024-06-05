@@ -37,7 +37,8 @@ public class JwtTokenProvider {
 	
     @Value("${springboot.jwt.secret}")
     private String secretKey; // Loaded from application.properties // this will replace the secret key that is defined in application.properties if program failed to scan it in application.propertie
-	private final long tokenValidMillisecond=1000L * 60 * 60;
+	
+    private final long tokenValidMillisecond=1000L * 60 * 60;
 	public JwtTokenProvider(UserDetailsService userDetailsService) {
 		super();
 		this.userDetailsService = userDetailsService;
@@ -55,9 +56,9 @@ public class JwtTokenProvider {
 	 @PostConstruct
 	    protected void init() {
 	        LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
-	        System.out.println(secretKey);
+	       
 	        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
-	        System.out.println(secretKey);
+	        
 	        LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
 	    }
 	 	
@@ -91,7 +92,7 @@ public class JwtTokenProvider {
 	            userDetails.getAuthorities());
 	    }
 	    
-	    // 예제 13.14
+	   
 	    // JWT 토큰에서 회원 구별 정보 추출
 	    public String getUsername(String token) {
 	        LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출");
@@ -103,23 +104,25 @@ public class JwtTokenProvider {
 	    
 	   
 	    
-	    public String resolveToken(HttpServletRequest request) {
+	    public String resolveToken(HttpServletRequest request) { // 현재 사용중이지않음 
+ 
+	        LOGGER.info("[resolveToken] HTTP 헤더에서 Token 값 추출");    
+	        LOGGER.info("[resolveToken]:", request.getHeader("Authorization"));
 
-	        LOGGER.info("[resolveToken] url parameter 에서 Token 값 추출");
-	        LOGGER.info("[resolveToken]:", request.getParameterNames() );
-	        
-	        //LOGGER.info("[resolveToken] HTTP 헤더에서 Token 값 추출");    
-	        //LOGGER.info("[resolveToken]:", request.getHeader("Authorization"));
-
-	        return request.getHeader("X-AUTH-TOKEN");
+	        return request.getHeader("Authorization");
 	    }
 
+	    
+	    
 	    public boolean validateToken(String token) {
 	        LOGGER.info("[validateToken] 토큰 유효 체크 시작");
 	        
 	        try {
 	        	
-	            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+	            Jws<Claims> claims = Jwts.parserBuilder()
+	            		.setSigningKey(getSigningKey())
+	            		.build()
+	            		.parseClaimsJws(token); // verifying signature  using secretkey
 	            
 	            LOGGER.info("[validateToken] 토큰 유효 체크 완료");
 	            
