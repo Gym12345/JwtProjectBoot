@@ -1,4 +1,4 @@
-package com.GymCompany.firstApp.security;
+package com.GymCompany.firstApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

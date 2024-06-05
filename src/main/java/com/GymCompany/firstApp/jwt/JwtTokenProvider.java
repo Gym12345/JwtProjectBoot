@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.GymCompany.firstApp.repository.UserListRepository;
+import com.GymCompany.firstApp.service.TokenBlacklistService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -32,16 +34,17 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtTokenProvider {
 	private final Logger LOGGER=LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService; // Spring Security 에서 제공하는 서비스 레이어
-	
+    private final TokenBlacklistService tokenBlacklistService;
 	
 	
     @Value("${springboot.jwt.secret}")
     private String secretKey; // Loaded from application.properties // this will replace the secret key that is defined in application.properties if program failed to scan it in application.propertie
 	
     private final long tokenValidMillisecond=1000L * 60 * 60;
-	public JwtTokenProvider(UserDetailsService userDetailsService) {
-		super();
+	public JwtTokenProvider(UserDetailsService userDetailsService, TokenBlacklistService tokenBlacklistService) {
+		
 		this.userDetailsService = userDetailsService;
+		this.tokenBlacklistService = tokenBlacklistService;
 	
 	}
 	
@@ -119,6 +122,11 @@ public class JwtTokenProvider {
 	        
 	        try {
 	        	
+	        	if (tokenBlacklistService.isTokenBlacklisted(token)) {// 토큰 블랙리스트툇는지안됫는지
+	                LOGGER.info("[validateToken] 토큰이 블랙리스트에 있습니다.");
+	                return false;
+	            }
+	        	
 	            Jws<Claims> claims = Jwts.parserBuilder()
 	            		.setSigningKey(getSigningKey())
 	            		.build()
@@ -133,5 +141,17 @@ public class JwtTokenProvider {
 	            
 	            return false;
 	        }
+	    }
+	    
+	    
+	    public Date getExpirationDate(String token) {  //토큰 만료 시간 리턴
+	        LOGGER.info("[getExpirationDate] 토큰 만료 날짜 조회 시작");
+	        Jws<Claims> claims = Jwts.parserBuilder()
+	                .setSigningKey(getSigningKey())
+	                .build()
+	                .parseClaimsJws(token);
+	        Date expiration = claims.getBody().getExpiration();
+	        LOGGER.info("[getExpirationDate] 토큰 만료 날짜 조회 완료, expiration : {}", expiration);
+	        return expiration;
 	    }
 }
