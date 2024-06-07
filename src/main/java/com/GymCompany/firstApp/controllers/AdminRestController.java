@@ -33,11 +33,11 @@ public class AdminRestController {
 //	  
 	  @PostMapping("/run-notebook")
 	    public String testAIConnection(@RequestBody String payload) {
-	        // Assuming token validation logic here
-
+	        
+		  
 	        String url = "http://localhost:5000/admin/run-notebook";
 	        ResponseEntity<String> response = restTemplate.postForEntity(url, null, String.class);
-
+	        
 	        return response.getBody();
 	    }
 }

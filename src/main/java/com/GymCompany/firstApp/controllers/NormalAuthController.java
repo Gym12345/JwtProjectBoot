@@ -36,7 +36,7 @@ public class NormalAuthController {
 		return "redirect:/";
 	}
 	
-	@GetMapping(value = "/test") // this is basic code for loading other page or function
+	@GetMapping(value = "/basicTemplate") // this is basic code for loading other page or function
 	public String test(HttpServletRequest request) {
 
 		String jwtToken=(String) request.getAttribute("token");   //must need 
@@ -44,7 +44,7 @@ public class NormalAuthController {
 		Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken);    //optional but could be essential afterhand
         SecurityContextHolder.getContext().setAuthentication(authentication);            //
   
-		return "test";
+		return "basicTemplate";
         
        
 	}
