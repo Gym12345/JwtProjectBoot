@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminAuthController {
 	
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;

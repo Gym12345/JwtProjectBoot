@@ -53,6 +53,9 @@
     
 </head>
 <body>
+
+
+<button class="btn btn-primary" onclick="ToWelcomePage()">ToWelcomePage</button>
 <div class="container">
     <div class="login-container">
         <h1>Please Log In</h1>
@@ -134,7 +137,11 @@
                 throw new Error('Login failed');
             }
         }
- 	 
+ 	 function ToWelcomePage(){
+ 		 
+ 		 window.location.href='/';
+ 	 }
+ 	 	
  	 
  
     </script>

@@ -12,10 +12,13 @@
        
         
      <button class="btn btn-primary" onclick="logout()">Log out</button>
-        
+     <button class="btn btn-warning" onclick="goToAfterLogin()">ToafterLoginPage</button>  
 	 <h1 class="text-center mb-4">Basic Template</h1> 
 	 
 	 <h2 class="text-center mb-4">implement here</h2> 
+	 
+	 
+	 
 	 
 	 
 	 
@@ -53,7 +56,9 @@
                 }
             });
         }
-        
+        function goToAfterLogin(){
+        	window.location.href='/normalUser/afterLogin?token='+urlToken;
+        }
         /* window.onbeforeunload = function (e) {
             logout();
         }; */

@@ -27,7 +27,8 @@
 </head>
 <body>
   <button class="btn btn-success" onclick="logout()">Log out</button>
-
+  <button class="btn btn-warning" onclick="goToAfterLogin()">ToafterLoginPage</button>
+  
     <div class="container">
         <h1 class="text-center">AI Testing</h1>
         <div class="text-center">
@@ -106,7 +107,9 @@
     	        }
     	    });
       }       
-                  
+      function goToAfterLogin(){
+          window.location.href='/normalUser/afterLogin?token='+urlToken;
+       }          
     </script>
 
     <!-- Bootstrap JS and dependencies -->

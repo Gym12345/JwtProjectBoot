@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RequestMapping("/admin")
 @RestController
-public class AdminRestController {
+public class AdminAuthRestController {
 	
 	 @Autowired
 	 private RestTemplate restTemplate;

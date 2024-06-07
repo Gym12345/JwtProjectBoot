@@ -6,7 +6,22 @@
     <title>Logout Example</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script>
+   
+   
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Welcome to the After Login Page</h1>
+        <div class="d-flex justify-content-center mb-3">
+            <button class="btn btn-primary mr-2" onclick="logout()">Log out</button>
+            <button class="btn btn-secondary mr-2" onclick="basicTemplate()">basicTemplate</button>
+            <button class="btn btn-info" onclick="aiConnectionTest()">AI Test</button>
+        </div>
+    </div>
+    
+    
+    
+     <script>
         const storageToken = localStorage.getItem('jwtToken');
         // Retrieve the token from the URL
         const urlToken = getQueryParameter('token');
@@ -51,18 +66,6 @@
             window.location.href = '/admin/aiConnectionTest?token=' + urlToken;
         }
     </script>
-   
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Welcome to the After Login Page</h1>
-        <div class="d-flex justify-content-center mb-3">
-            <button class="btn btn-primary mr-2" onclick="logout()">Log out</button>
-            <button class="btn btn-secondary mr-2" onclick="basicTemplate()">basicTemplate</button>
-            <button class="btn btn-info" onclick="aiConnectionTest()">AI Test</button>
-        </div>
-    </div>
-    <!-- Bootstrap JS and dependencies -->
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
