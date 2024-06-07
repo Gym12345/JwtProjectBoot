@@ -47,7 +47,9 @@
      function test(){
     	 window.location.href ='/normalUser/test?token='+urlToken;
      }
-                  
+     function aiConnectionTest(){    //jupyter notebook 연결
+    	 window.location.href ='/admin/aiConnectionTest?token='+urlToken;
+     }            
                  
     </script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -55,6 +57,8 @@
 <body>
     <button onclick="logout()">Log out</button>
     <button onclick="test()">testRedirect</button>
+    
+    <button onclick="aiConnectionTest()">AI-TEST</button>
     afterLoginPage
   
     

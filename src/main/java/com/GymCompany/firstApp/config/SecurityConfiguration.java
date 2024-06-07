@@ -3,7 +3,6 @@ package com.GymCompany.firstApp.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,6 +34,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/", "/getSecurityContext", "/swagger-ui/**", "/v3/api-docs/**", "/sign-api/sign-in", "/sign-api/sign-up", "/sign-api/exception", "/favicon.ico").permitAll() // swagger 
                 .requestMatchers("/auth/**").permitAll() // 가입 및 로그인 주소는 허용
                 .requestMatchers("/normalUser/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN") // 일반유저 로그인
+                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN") // 일반유저 로그인
                 .requestMatchers("/gamePage").permitAll() // 가입 및 로그인 주소는 허용
 
                 .requestMatchers("**exception**").permitAll()

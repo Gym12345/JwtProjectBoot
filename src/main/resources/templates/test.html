@@ -11,7 +11,10 @@
    	const urlToken = getQueryParameter('token');
              console.log('Extracted Token:', urlToken); 
             
-	
+   function getQueryParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+             }        
 	// 리다이렉션시 window.location.href="linkUrl?token="+urlToken; 이렇게 해주기
             
                   
@@ -19,6 +22,6 @@
     </script>
 </head>
 <body>
-    testin
+   AI testin
 </body>
 </html>
