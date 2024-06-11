@@ -31,7 +31,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "USERLIST")
 public class UserListDTO implements UserDetails {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -61,8 +60,27 @@ public class UserListDTO implements UserDetails {
     @Column(name = "Last_Login_Time")
     private LocalDateTime lastLoginTime;
 
+    @Column(name = "GENDER")
+    @NotNull
+    @Size(max = 50)
+    private String gender;
+
+    @Column(name = "AGE")
+    @NotNull
+    private int age;
+
+    @Column(name = "EMAIL")
+    @NotNull
+    @Size(max = 50)
+    private String email;
+
+    @Column(name = "PHONE")
+    @NotNull
+    @Size(max = 50)
+    private String phone;
+
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "USER_AUTHORITY", joinColumns = @JoinColumn(name = "UA_ID"))  //USER_AUTHORITY 의 있는  fk 로쓰인 컬럼명말하는거
+    @CollectionTable(name = "USER_AUTHORITY", joinColumns = @JoinColumn(name = "UA_ID"))
     @Column(name = "AUTHORITY_NAME")
     private List<String> roles = new ArrayList<>();
 
@@ -70,6 +88,8 @@ public class UserListDTO implements UserDetails {
 
     public UserListDTO(int ulid, @NotNull @Size(max = 50) String userId, @NotNull @Size(max = 100) String userPw,
                        @NotNull @Size(max = 100) String userName, LocalDate joinDate, LocalDateTime lastLoginTime,
+                       @NotNull @Size(max = 50) String gender, @NotNull int age,
+                       @NotNull @Size(max = 50) String email, @NotNull @Size(max = 50) String phone,
                        List<String> roles) {
         this.ulid = ulid;
         this.userId = userId;
@@ -77,6 +97,10 @@ public class UserListDTO implements UserDetails {
         this.userName = userName;
         this.joinDate = joinDate;
         this.lastLoginTime = lastLoginTime;
+        this.gender = gender;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
         this.roles = roles != null ? roles : new ArrayList<>();
     }
 
@@ -128,6 +152,38 @@ public class UserListDTO implements UserDetails {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public List<String> getRoles() {
         return roles;
     }
@@ -139,7 +195,8 @@ public class UserListDTO implements UserDetails {
     @Override
     public String toString() {
         return "UserListDTO [ulid=" + ulid + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
-                + ", joinDate=" + joinDate + ", lastLoginTime=" + lastLoginTime + ", roles=" + roles + "]";
+                + ", joinDate=" + joinDate + ", lastLoginTime=" + lastLoginTime + ", gender=" + gender + ", age=" + age
+                + ", email=" + email + ", phone=" + phone + ", roles=" + roles + "]";
     }
 
     // UserDetails
@@ -147,7 +204,6 @@ public class UserListDTO implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
-
 
     @Override
     public String getPassword() {
@@ -188,6 +244,10 @@ public class UserListDTO implements UserDetails {
         private String userName;
         private LocalDate joinDate;
         private LocalDateTime lastLoginTime;
+        private String gender;
+        private int age;
+        private String email;
+        private String phone;
         private List<String> roles;
 
         public Builder() {}
@@ -222,13 +282,33 @@ public class UserListDTO implements UserDetails {
             return this;
         }
 
+        public Builder gender(String gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
         public Builder roles(List<String> roles) {
             this.roles = roles;
             return this;
         }
 
         public UserListDTO build() {
-            return new UserListDTO(ulid, userId, userPw, userName, joinDate, lastLoginTime, roles);
+            return new UserListDTO(ulid, userId, userPw, userName, joinDate, lastLoginTime, gender, age, email, phone, roles);
         }
     }
 }

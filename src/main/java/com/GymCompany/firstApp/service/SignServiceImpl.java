@@ -41,79 +41,87 @@ public class SignServiceImpl implements SignService {
 			this.passwordEncoder = passwordEncoder;
 		}
 	
-    @Transactional
+	@Transactional
 	@Override
-	public SignUpResultDTO signUp(String userId, String userPw, String userName, String role) {
-		LOGGER.info("signing up");
-		UserListDTO userDTO;
-		
-		if(role.equalsIgnoreCase("admin")) { //대소문자 구분 X
-			userDTO= new UserListDTO.Builder()
-					.userId(userId)
-					.userPw(passwordEncoder.encode(userPw))
-					.userName(userName)
-					
-					.roles(Collections.singletonList("ROLE_ADMIN")) //어드민 로그인
-					.joinDate(LocalDate.now())
-	                .lastLoginTime(LocalDateTime.now())
-	                .build();
-		}else {
-			userDTO= new UserListDTO.Builder()
-					.userId(userId)
-					.userPw(passwordEncoder.encode(userPw))
-					.userName(userName)
-					.roles(Collections.singletonList("ROLE_USER"))//노멀유저
-					.joinDate(LocalDate.now())
-	                .lastLoginTime(LocalDateTime.now())
-	                .build();
-		}
-		LOGGER.info("userDTO: {}",userDTO);
-		UserListDTO savedUserDTO=userListRepository.save(userDTO); //savedUserDTO 찍어보기
+	public SignUpResultDTO signUp(String userId, String userPw, String userName, String role, String email, String phone, int age, String gender) {
+	    LOGGER.info("signing up");
+	    UserListDTO userDTO;
 
-		LOGGER.info("savedUserDTO: {}",savedUserDTO);//잘찍힘
-		SignUpResultDTO signUpResultDTO=new SignUpResultDTO(); //response 에 쓰일 객체임  성공유무, 성공 또는 실패시 메시지 포함함 성공유무 , 메시지 의 값세팅은 setFailResult 나 setSuccessResult 함수에서 진행
-		
-		
-		
-		if(savedUserDTO.getUserName().isEmpty()) {
-			LOGGER.info("회원가입 데이터 에러발생:",savedUserDTO);
-			setFailResult(signUpResultDTO);
-		}
-		else {
-			LOGGER.info("회원가입 정상작동:",savedUserDTO);
-			setSuccessResult(signUpResultDTO);
-			
-		}
-			
-		return signUpResultDTO;
+	    if (role.equalsIgnoreCase("admin")) { // 대소문자 구분 X
+	        userDTO = new UserListDTO.Builder()
+	                .userId(userId)
+	                .userPw(passwordEncoder.encode(userPw))
+	                .userName(userName)
+	                .email(email)
+	                .phone(phone)
+	                .age(age)
+	                .gender(gender)
+	                .roles(Collections.singletonList("ROLE_ADMIN")) // 어드민 로그인
+	                .joinDate(LocalDate.now())
+	                .lastLoginTime(LocalDateTime.now())
+	                .build();
+	    } else {
+	        userDTO = new UserListDTO.Builder()
+	                .userId(userId)
+	                .userPw(passwordEncoder.encode(userPw))
+	                .userName(userName)
+	                .email(email)
+	                .phone(phone)
+	                .age(age)
+	                .gender(gender)
+	                .roles(Collections.singletonList("ROLE_USER")) // 노멀유저
+	                .joinDate(LocalDate.now())
+	                .lastLoginTime(LocalDateTime.now())
+	                .build();
+	    }
+
+	    LOGGER.info("userDTO: {}", userDTO);
+	    UserListDTO savedUserDTO = userListRepository.save(userDTO); // savedUserDTO 찍어보기
+
+	    LOGGER.info("savedUserDTO: {}", savedUserDTO); // 잘찍힘
+	    SignUpResultDTO signUpResultDTO = new SignUpResultDTO(); // response 에 쓰일 객체임 성공유무, 성공 또는 실패시 메시지 포함함 성공유무, 메시지의 값세팅은 setFailResult 나 setSuccessResult 함수에서 진행
+
+	    if (savedUserDTO.getUserName().isEmpty()) {
+	        LOGGER.info("회원가입 데이터 에러발생:", savedUserDTO);
+	        setFailResult(signUpResultDTO);
+	    } else {
+	        LOGGER.info("회원가입 정상작동:", savedUserDTO);
+	        setSuccessResult(signUpResultDTO);
+	    }
+
+	    return signUpResultDTO;
 	}
+
 	
-    @Transactional
+	@Transactional
 	@Override
 	public SignInResultDTO signIn(String userId, String userPw) {
-		LOGGER.info("로그인 진행중");
-		UserListDTO userDTO=userListRepository.getByUserId(userId);
-		
-		LOGGER.info("입력된 userId  : {}",userId);
-		SignInResultDTO signInResultDTO = null;
-		
-		if(passwordEncoder.matches(userPw,userDTO.getUserPw())) {
-			LOGGER.info("로그인성공");
-			  String token = jwtTokenProvider.createToken(String.valueOf(userDTO.getUserId()), userDTO.getRoles());
-		        signInResultDTO = new SignInResultDTO.Builder()
-		                .token(token)
-		                .build();
-		        setSuccessResult(signInResultDTO);
-		        LOGGER.info("Generated token: {}", token);
-		        System.out.println("token:"+token);
-		}else {
-			LOGGER.info("입력 내용 불일치");
-			setFailResult(signInResultDTO);
-			throw new RuntimeException();
-		}
-		
-		return signInResultDTO;
+	    LOGGER.info("로그인 진행중");
+	    UserListDTO userDTO = userListRepository.getByUserId(userId);
+	    
+	    SignInResultDTO signInResultDTO = new SignInResultDTO(); // Initialize the object here
+	    
+	    if (userDTO != null && passwordEncoder.matches(userPw, userDTO.getUserPw())) {
+	        LOGGER.info("로그인성공");
+	        String token = jwtTokenProvider.createToken(String.valueOf(userDTO.getUserId()), userDTO.getRoles());
+	        signInResultDTO = new SignInResultDTO.Builder()
+	                .token(token)
+	                .build();
+	        setSuccessResult(signInResultDTO);
+	        LOGGER.info("Generated token: {}", token);
+	        System.out.println("token:" + token);
+	        return signInResultDTO;
+	    } else {
+	        LOGGER.info("입력 내용 불일치");
+	        setFailResult(signInResultDTO);
+	        
+	        return signInResultDTO;
+	    }
+	    
+	   
 	}
+
+	    
     
     @Override
 	@Transactional(readOnly = true)

@@ -67,33 +67,45 @@ public class AuthRestController {
 	                
 	                //response.setHeader("X-AUTH-TOKEN",jwtToken );
 	                
-
+	            
 	    	        
 	    	       
 	                return jwtToken;
 	            } else {
 	                LOGGER.info("JWT token validation failed for user id: {}", userId);
-	                return "JWT token validation failed";
+	               ;
+	                return null;
 	            }
 	        } else {
 	            LOGGER.info("Login failed for user id: {}", userId);
-	            return "Login failed";
+	            
+                return null;
 	        }
 	    }
 	  
 	  
 	  
 	  @PostMapping(value = "/registerCheck")
-	    public SignUpResultDTO registerCheck(@RequestBody UserListDTO userDTO) { //, @RequestParam(value="role") String role
-		  
-	        String role="normal"; //admin 만 아니면 어떤 스트링이던지 상관없음
-	        System.out.println("userId:" + userDTO.getUserId());
-	        SignUpResultDTO signUpResultDTO = signService.signUp(userDTO.getUserId(), userDTO.getUserPw(), userDTO.getUserName(), role);
+	  public SignUpResultDTO registerCheck(@RequestBody UserListDTO userDTO) {
+	      String role = "normal"; // admin 만 아니면 어떤 스트링이던지 상관없음
+	      System.out.println("userId:" + userDTO.getUserId());
 
-	       LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", userDTO.getUserId());
-	        return signUpResultDTO;
-	    }
-	    
+	      // Call the signUp method with all the necessary fields
+	      SignUpResultDTO signUpResultDTO = signService.signUp(
+	          userDTO.getUserId(),
+	          userDTO.getUserPw(),
+	          userDTO.getUserName(),
+	          role,
+	          userDTO.getEmail(),
+	          userDTO.getPhone(),
+	          userDTO.getAge(),
+	          userDTO.getGender()
+	      );
+
+	      LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", userDTO.getUserId());
+	      return signUpResultDTO;
+	  }
+
 	  
 	  
 		@PostMapping("/rddCheck")

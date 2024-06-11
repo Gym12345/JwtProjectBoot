@@ -95,7 +95,20 @@
 			
             try {
                 const token = await loginAndGetToken(username, password);
-            	localStorage.setItem('jwtToken', token);
+                
+                if (token === ""){
+                	 
+                    	
+                     document.getElementById('error-message').innerText = 'Login failed. Please try again.';
+                     
+                     
+                }
+                
+                else{
+                	localStorage.setItem('jwtToken', token);
+                	 window.location.href = '/normalUser/afterLogin?token='+token;  // 여기서 어떨게 이요청에 헤더 에 집어넣을지
+                }
+            
             	
             	
             	
@@ -103,11 +116,11 @@
                 
                  
                  
-               window.location.href = '/normalUser/afterLogin?token='+token;  // 여기서 어떨게 이요청에 헤더 에 집어넣을지
+              
                
             } catch (error) {
                 console.error('Error:', error);
-                // Handle the error (e.g., display an error message to the user)
+               	
                 document.getElementById('error-message').innerText = 'Login failed. Please try again.';
             }
         }
@@ -131,7 +144,7 @@
 
             if (response.ok) {
                 const jwtToken = await response.text();
-               
+              
                 return jwtToken;
             } else {
                 throw new Error('Login failed');

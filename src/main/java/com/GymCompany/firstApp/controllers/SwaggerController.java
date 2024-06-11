@@ -56,16 +56,23 @@ public class SwaggerController { //swagger
 	    public SignUpResultDTO signUp(
 	        @ApiParam(value = "userId", required = true) @RequestParam(value="userId") String userId,
 	        @ApiParam(value = "userPw", required = true) @RequestParam(value="userPw") String userPw,
-	        @ApiParam(value = "userName", required = true) @RequestParam(value="userName")String userName,
-	        @ApiParam(value = "role", required = true) @RequestParam(value="role") String role) {
-	        LOGGER.info("[signUp] 회원가입을 수행합니다.");
-	        LOGGER.info("role : {}",role);
+	        @ApiParam(value = "userName", required = true) @RequestParam(value="userName") String userName,
+	        @ApiParam(value = "role", required = true) @RequestParam(value="role") String role,
+	        @ApiParam(value = "email", required = true) @RequestParam(value="email") String email,
+	        @ApiParam(value = "phone", required = true) @RequestParam(value="phone") String phone,
+	        @ApiParam(value = "age", required = true) @RequestParam(value="age") int age,
+	        @ApiParam(value = "gender", required = true) @RequestParam(value="gender") String gender) {
 
-	        SignUpResultDTO signUpResultDTO = signService.signUp(userId, userPw, userName, role);
+	        LOGGER.info("[signUp] 회원가입을 수행합니다.");
+	        LOGGER.info("role : {}", role);
+
+	        // Call the signUp method with all the necessary fields
+	        SignUpResultDTO signUpResultDTO = signService.signUp(userId, userPw, userName, role, email, phone, age, gender);
 
 	        LOGGER.info("[signUp] 회원가입을 완료했습니다. id : {}", userId);
 	        return signUpResultDTO;
 	    }
+
 	    
 	    
 	  
