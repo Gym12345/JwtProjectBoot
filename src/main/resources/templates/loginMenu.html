@@ -5,6 +5,33 @@
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+    
+        .kakao-login-button {
+            background-color: #FEE500;
+            color: #3C1E1E;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            width: 250px;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .kakao-login-button img {
+            margin-right: 10px;
+        }
+
+        .kakao-login-button:hover {
+            background-color: #E5CC00;
+        }
+    
         body { background-color: #f8f9fa; }
         .login-container {
             max-width: 400px;
@@ -77,6 +104,11 @@
         <div class="register-link">
             <a href="/auth/registerMenu">Register</a>
         </div>
+        
+         <a class="kakao-login-button" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI">
+        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="KakaoTalk Logo" width="24" height="24">
+        Login with KakaoTalk
+   		 </a>
     </div>
 </div>
 <!-- Bootstrap JS (Optional) -->

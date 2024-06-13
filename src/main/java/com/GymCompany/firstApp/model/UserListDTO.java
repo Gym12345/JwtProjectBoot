@@ -37,6 +37,7 @@ public class UserListDTO implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userListSeqGen")
     @SequenceGenerator(name = "userListSeqGen", sequenceName = "user_list_seq", allocationSize = 1)
     @Column(name = "ULID")
+    
     private int ulid;
 
     @Column(name = "USERID", unique = true)
@@ -83,7 +84,7 @@ public class UserListDTO implements UserDetails {
     @CollectionTable(name = "USER_AUTHORITY", joinColumns = @JoinColumn(name = "UA_ID"))
     @Column(name = "AUTHORITY_NAME")
     private List<String> roles = new ArrayList<>();
-
+    
     public UserListDTO() {}
 
     public UserListDTO(int ulid, @NotNull @Size(max = 50) String userId, @NotNull @Size(max = 100) String userPw,

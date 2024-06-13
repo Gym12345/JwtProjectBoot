@@ -22,36 +22,39 @@ dependencies {
 	
 
 
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '3.2.4'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '3.2.6'
 	
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.4'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.6'
 	
 	
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.2.4'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.2.6'
 	
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
 
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.4'  //redis
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.6'  //redis
+	//
 
 	implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.3.2.RELEASE'
-
+	//
     
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    
+    //
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
+	//
     
     implementation 'org.springframework.security:spring-security-crypto' // Bcrypt hashing library
-	
+	//
 	implementation 'com.oracle.database.jdbc:ojdbc11:21.1.0.0'
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
     
-    
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	
 	implementation 'javax.validation:validation-api:2.0.1.Final' 
+	//
+	
 	implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '11.0.0-M16'
 	
 	

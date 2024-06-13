@@ -13,4 +13,6 @@ import com.GymCompany.firstApp.model.UserListDTO;
 public interface UserListRepository extends JpaRepository<UserListDTO, Integer> { 
 	
 	UserListDTO getByUserId(String id);
+	
+	
 }
