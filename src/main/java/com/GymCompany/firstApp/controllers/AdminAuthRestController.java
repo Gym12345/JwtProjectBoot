@@ -20,17 +20,7 @@ public class AdminAuthRestController {
 
 
 	  
-	  
-//	  @PostMapping("/run-notebook")   //rest request after authentication
-//	    public String receiveData(@RequestBody String payload) {
-//	      
-//	        String receivedData = payload;
-//	        System.out.println("Received data: " + receivedData);
-//	        
-//	       
-//	        return "Received: " + receivedData;
-//	    }
-//	  
+
 	  @PostMapping("/run-notebook")
 	    public String testAIConnection(@RequestBody String payload) {
 	        

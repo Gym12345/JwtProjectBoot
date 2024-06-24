@@ -102,17 +102,20 @@
     <script>
         function rddCheck() {
             let data = document.getElementById('userId').value;
-
+            if (data == "") {
+                alert("아이디를 입력해주세요");
+                return;
+            	}	
+             
             $.ajax({
                 type: "POST",
                 url: "/auth/rddCheck",
                 data: JSON.stringify(data),
+              	
                 contentType: "application/json",
                 success: function (response) {
-                    if (data == "") {
-                        alert("아이디를 입력해주세요");
-                        return;
-                    }
+                	
+                	
                     if (response == 0) {
                         alert("적합한 아이디입니다");
                         document.getElementById("userId").readOnly = true;

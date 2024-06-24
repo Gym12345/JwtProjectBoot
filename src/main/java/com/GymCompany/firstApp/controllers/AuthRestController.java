@@ -42,7 +42,7 @@ public class AuthRestController {
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 	
-	  @PostMapping(value = "/loginCheck")
+	    @PostMapping(value = "/loginCheck")
 	    public String loginCheck(HttpServletRequest request, HttpServletResponse response,
 	                             @RequestParam("userId") String userId,
 	                             @RequestParam("userPw") String userPw) {
@@ -110,7 +110,9 @@ public class AuthRestController {
 	  
 		@PostMapping("/rddCheck")
 	    public int rddUserId(@RequestBody String userIdData) { 
+			 System.out.println("rdddddddddddddddddddddd");
 	        System.out.println("Data received from client: " + userIdData);
+	       
 	        int result = 0;
 	        try {
 	            result = signService.redundancyCheck(userIdData);
