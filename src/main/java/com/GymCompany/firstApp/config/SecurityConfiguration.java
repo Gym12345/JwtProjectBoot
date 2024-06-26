@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/normalUser/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN") // 일반유저 로그인
                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN") // 일반유저 로그인
                 .requestMatchers("/gamePage").permitAll() // 가입 및 로그인 주소는 허용
-
+                	
                 .requestMatchers("**exception**").permitAll()
                 .anyRequest().hasAuthority("ROLE_ADMIN") // 나머지 요청은 인증된 ADMIN만 접근 가능
             )

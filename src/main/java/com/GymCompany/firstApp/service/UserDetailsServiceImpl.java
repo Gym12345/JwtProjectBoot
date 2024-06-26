@@ -27,5 +27,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return userListRepository.getByUserId(userId);     //UserListDTO is implementing UserDetails
 	}
 	
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 
 }

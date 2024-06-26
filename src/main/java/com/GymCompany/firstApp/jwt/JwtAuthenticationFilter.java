@@ -29,7 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
  protected void doFilterInternal(HttpServletRequest servletRequest,  HttpServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
 	 
 	 
-	 String token= servletRequest.getParameter("token");
+	 String token= servletRequest.getParameter("token"); // might change this that gets useState dat from react
+	 
 	 LOGGER.info("[doFilterInternal] token : {}", token  );
 
 	
