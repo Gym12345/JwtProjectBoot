@@ -122,7 +122,7 @@ public class JwtTokenProvider {
 	        
 	        try {
 	        	
-	        	if (tokenBlacklistService.isTokenBlacklisted(token)) {// checks if the token is blacklisted or not 
+	        	if (tokenBlacklistService.isTokenBlacklisted(token)) {// checks if the token is blacklisted or not on redis 
 	                LOGGER.info("[validateToken] 토큰이 블랙리스트에 있습니다.");
 	                return false;
 	            }

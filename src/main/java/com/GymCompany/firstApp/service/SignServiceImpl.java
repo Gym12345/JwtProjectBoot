@@ -15,7 +15,6 @@ import com.GymCompany.firstApp.Response.CommonResponse;
 import com.GymCompany.firstApp.jwt.JwtTokenProvider;
 import com.GymCompany.firstApp.model.SignInResultDTO;
 import com.GymCompany.firstApp.model.SignUpResultDTO;
-import com.GymCompany.firstApp.model.TempUserDTO;
 import com.GymCompany.firstApp.model.UserListDTO;
 import com.GymCompany.firstApp.repository.UserListRepository;
 

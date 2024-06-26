@@ -20,4 +20,6 @@ public interface UserListRepository extends JpaRepository<UserListDTO, Integer> 
     @Transactional
     @Query("UPDATE UserListDTO u SET u.lastLoginTime = CURRENT_TIMESTAMP WHERE u.userId = :userId")
     void updateLastLoginTime(@Param("userId") 	String userId);
+	
+	
 }

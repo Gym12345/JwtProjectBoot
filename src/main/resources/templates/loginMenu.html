@@ -112,10 +112,10 @@
     </div>
 </div>
 <!-- Bootstrap JS (Optional) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
       
 
@@ -158,30 +158,27 @@
         }
         
         
- 	 async function loginAndGetToken(userId, userPw) {
-        	 
-
-            const response = await fetch('/auth/loginCheck', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    	
-					
-                },
-                body: new URLSearchParams({
-                    userId: userId,
-                    userPw: userPw
-                })
+        function loginAndGetToken(userId, userPw) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/auth/loginCheck',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ userId, userPw }),
+                    success: function(data, textStatus, xhr) {
+                        if (xhr.status === 200) {
+                            resolve(data);  // Assuming the server returns the token directly in the response body
+                        } else {
+                            reject('Login failed');
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        reject('Login failed with status: ' + xhr.status);
+                    }
+                });
             });
-
-            if (response.ok) {
-                const jwtToken = await response.text();
-              
-                return jwtToken;
-            } else {
-                throw new Error('Login failed');
-            }
         }
+
  	 function ToWelcomePage(){
  		 
  		 window.location.href='/';

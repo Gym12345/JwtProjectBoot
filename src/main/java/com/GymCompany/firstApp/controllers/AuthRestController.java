@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.GymCompany.firstApp.jwt.JwtTokenProvider;
 import com.GymCompany.firstApp.model.SignInResultDTO;
 import com.GymCompany.firstApp.model.SignUpResultDTO;
+import com.GymCompany.firstApp.model.TempUserDTO;
 import com.GymCompany.firstApp.model.UserListDTO;
 import com.GymCompany.firstApp.service.SignService;
 import com.GymCompany.firstApp.service.TokenBlacklistService;
@@ -26,7 +28,7 @@ import com.GymCompany.firstApp.service.TokenBlacklistService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthRestController {
@@ -42,47 +44,46 @@ public class AuthRestController {
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 	
-	    @PostMapping(value = "/loginCheck")
-	    public String loginCheck(HttpServletRequest request, HttpServletResponse response,
-	                             @RequestParam("userId") String userId,
-	                             @RequestParam("userPw") String userPw) {
 
-	        LOGGER.info("[signIn] Attempting to log in. id : {}, pw : ****", userId);
-	        SignInResultDTO signInResultDTO = signService.signIn(userId, userPw);
-	        
-	        if (signInResultDTO.getCode() == 1) {
-	            LOGGER.info("[signIn] Successfully logged in. id : {}, token : {}", userId, signInResultDTO.getToken());
-	            
-	            // Get JWT token from signInResultDTO
-	            String jwtToken = signInResultDTO.getToken();
-	            
-	            if (jwtTokenProvider.validateToken(jwtToken)) {
-	                
-	                Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken);
-	               
-	                System.out.println("jwtToken:"+jwtToken);
-	                System.out.println("authentication:"+authentication);
-	                
-	                SecurityContextHolder.getContext().setAuthentication(authentication);
-	                
-	                //response.setHeader("X-AUTH-TOKEN",jwtToken );
-	                
-	            
-	    	        
-	    	       
-	                return jwtToken;
-	            } else {
-	                LOGGER.info("JWT token validation failed for user id: {}", userId);
-	               ;
-	                return null;
-	            }
-	        } else {
-	            LOGGER.info("Login failed for user id: {}", userId);
-	            
+
+    @PostMapping(value = "/loginCheck")
+    public String loginCheck(@RequestBody TempUserDTO dto) {
+
+        LOGGER.info("[signIn] Attempting to log in. with id : {}", dto.getUserId());
+     SignInResultDTO signInResultDTO = signService.signIn( dto.getUserId(),  dto.getUserPw());
+      
+        if (signInResultDTO.getCode() == 1) {
+            LOGGER.info("[signIn] Successfully logged in. id : {}, token : {}", dto.getUserId(), signInResultDTO.getToken());
+            
+            // Get JWT token from signInResultDTO
+            String jwtToken = signInResultDTO.getToken();
+            
+            if (jwtTokenProvider.validateToken(jwtToken)) {
+                
+                Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken);
+               
+                System.out.println("jwtToken:"+jwtToken);
+                System.out.println("authentication:"+authentication);
+                
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                
+                //response.setHeader("X-AUTH-TOKEN",jwtToken );
+                
+            
+    	        
+    	       
+                return jwtToken;
+            } else {
+                LOGGER.info("JWT token validation failed for user id: {}", dto.getUserId());
+               ;
                 return null;
-	        }
-	    }
-	  
+            }
+        } else {
+            LOGGER.info("Login failed for user id: {}",dto.getUserId());
+            
+            return null;
+        }
+    }
 	  
 	  
 	  @PostMapping(value = "/registerCheck")

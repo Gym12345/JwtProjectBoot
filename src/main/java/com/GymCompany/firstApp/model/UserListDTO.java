@@ -44,7 +44,7 @@ public class UserListDTO implements UserDetails {
     @NotNull
     @Size(max = 50)
     private String userId;
-
+    
     @Column(name = "USERPW")
     @NotNull
     @Size(max = 100)
